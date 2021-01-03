@@ -71,7 +71,6 @@ public class ZmanFileProvider extends FileProvider {
     }
 
     public File getFileForUri(Uri uri) {
-        System.out.println("git");
         String path = uri.getEncodedPath();
         if (TextUtils.isEmpty(path)) {
             return null;
