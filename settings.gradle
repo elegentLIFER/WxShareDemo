@@ -1,3 +1,4 @@
+include ':contentprovideruser'
 include ':contentprovider'
 include ':filereceiver'
 include ':app'

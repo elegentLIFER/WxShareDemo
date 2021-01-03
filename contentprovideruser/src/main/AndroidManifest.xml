@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.contentprovider">
+    package="com.example.user">
 
+    <uses-permission android:name="com.example.CONTENTPROVIDER" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,15 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <provider
-            android:authorities="com.example.contentprovider"
-            android:permission="com.example.CONTENTPROVIDER"
-            android:exported="true"
-            android:enabled="true"
-            android:grantUriPermissions="true"
-            android:name=".MyProvider" />
-
     </application>
 
 </manifest>
