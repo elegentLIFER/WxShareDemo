@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wxsharedemo.R;
+import com.example.wxsharedemo.Utils;
 
 import java.io.Closeable;
 import java.io.File;
@@ -106,7 +107,7 @@ public class SharedStorageSAFActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                closeIO(pfd);
+                Utils.closeIO(pfd);
             }
 
         }
@@ -128,11 +129,4 @@ public class SharedStorageSAFActivity extends AppCompatActivity {
         }
     }
 
-    private void closeIO(Closeable io) {
-        try {
-            io.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

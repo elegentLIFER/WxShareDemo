@@ -21,7 +21,7 @@
             android:authorities="com.example.contentprovider"
             android:permission="com.example.CONTENTPROVIDER"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             android:grantUriPermissions="true"
             android:name=".MyProvider" />
 
