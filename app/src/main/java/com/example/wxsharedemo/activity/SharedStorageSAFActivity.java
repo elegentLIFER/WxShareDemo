@@ -40,10 +40,7 @@ public class SharedStorageSAFActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_FOR_SINGLE_FILE = 1;
     private static final int WRITE_REQUEST_CODE = 2;
-    private static final String TAG = "SharedStorageSAFActivity";
-
     private Uri queryUri;
-    private File newFile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +48,10 @@ public class SharedStorageSAFActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shared_storage_saf);
         ButterKnife.bind(this);
 
+        initTitle();
+    }
+
+    private void initTitle() {
         setTitle("共享目录");
         tvTip.setText("使用[SAF API]操作。\n" +
                 "SAF是指Storage Access Framework。\n"+"借助 SAF，用户可轻松在其所有首选文档存储提供程序中浏览并打开文档、图像及其他文件。" +

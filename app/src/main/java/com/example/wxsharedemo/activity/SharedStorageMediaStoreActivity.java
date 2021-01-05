@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.wxsharedemo.R;
 import com.example.wxsharedemo.Utils;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -42,9 +40,7 @@ public class SharedStorageMediaStoreActivity extends AppCompatActivity {
     ImageView ivImage;
 
     private static final String TAG = "ScopedStorageActivity";
-
     private Uri queryUri;
-    private File newFile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,20 +48,23 @@ public class SharedStorageMediaStoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shared_storage_ms);
         ButterKnife.bind(this);
 
+        initTitle();
+    }
+
+    private void initTitle() {
         setTitle("共享目录");
         tvTip.setText("共享目录操作,自己创建的文件无需权限，别人创建的文件需要权限。使用[MediaStore API]操作。" +
                 "\n 使用MediaStore API只能操作媒体文件，如果需要操作非媒体文件例如PDF文件，要使用SAF");
 
         String dcimPath = Environment.getExternalStorageDirectory().getPath() + File.separator + Environment.DIRECTORY_DCIM;
         tvContent.setText("共享目录(以DCIM为例)：" + dcimPath);
-
     }
 
     @OnClick({R.id.bt_create, R.id.bt_edit, R.id.bt_read, R.id.bt_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_create:
-                createImage(view);
+                createFile(view);
                 break;
             case R.id.bt_edit:
                 break;
@@ -78,7 +77,7 @@ public class SharedStorageMediaStoreActivity extends AppCompatActivity {
         }
     }
 
-    public void createImage(View view) {
+    public void createFile(View view) {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.DESCRIPTION, "描述");
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
@@ -116,9 +115,8 @@ public class SharedStorageMediaStoreActivity extends AppCompatActivity {
 
     public void readFile() {
         queryUri = queryUri("test.png");
-        if (queryUri == null) {
-            return;
-        }
+        if (queryUri == null)  return;
+
         tvContent.setText(queryUri.toString());
 
         ParcelFileDescriptor pfd = null;
@@ -157,7 +155,7 @@ public class SharedStorageMediaStoreActivity extends AppCompatActivity {
         getContentResolver().delete(queryUri, null, null);
         queryUri = null;
         ivImage.setImageBitmap(null);
-        tvContent.setText("delete success");
+        tvContent.setText("删除成功");
     }
 
     @Override

@@ -1,12 +1,16 @@
 package com.example.wxsharedemo.provider;
 
+import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
 import com.example.wxsharedemo.Constants;
@@ -19,39 +23,38 @@ public class ZmanFileProvider extends FileProvider {
     private static final String[] COLUMNS = {
             OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE, "_data"};
 
-//    @Override
-//    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
-//                        @Nullable String[] selectionArgs,
-//                        @Nullable String sortOrder) {
-//        File file = getFileForUri(uri);
-//
-//        if (projection == null) {
-//            projection = COLUMNS;
-//        }
-//        String[] cols = new String[projection.length];
-//        Object[] values = new Object[projection.length];
-//        int i = 0;
-//        for (String col : projection) {
-//            if (OpenableColumns.DISPLAY_NAME.equals(col)) {
-//                cols[i] = OpenableColumns.DISPLAY_NAME;
-//                values[i++] = file.getName();
-//            } else if (OpenableColumns.SIZE.equals(col)) {
-//                cols[i] = OpenableColumns.SIZE;
-//                values[i++] = file.length();
-//            } else if (MediaStore.MediaColumns.DATA.equals(col)) {
-//                cols[i] = MediaStore.MediaColumns.DATA;
-//                values[i++] = file.getAbsolutePath();
-//            }
-//        }
-//
-//        cols = copyOf(cols, i);
-//        values = copyOf(values, i);
-//
-//        final MatrixCursor cursor = new MatrixCursor(cols, 1);
-//        cursor.addRow(values);
-//
-//        return cursor;
-//    }
+    @Override
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
+                        @Nullable String[] selectionArgs,
+                        @Nullable String sortOrder) {
+        File file = getFileForUri(uri);
+
+        if (projection == null) {
+            projection = COLUMNS;
+        }
+        String[] cols = new String[projection.length];
+        Object[] values = new Object[projection.length];
+        int i = 0;
+        for (String col : projection) {
+            if (OpenableColumns.DISPLAY_NAME.equals(col)) {
+                cols[i] = OpenableColumns.DISPLAY_NAME;
+                values[i++] = file.getName();
+            } else if (OpenableColumns.SIZE.equals(col)) {
+                cols[i] = OpenableColumns.SIZE;
+                values[i++] = file.length();
+            } else if (MediaStore.MediaColumns.DATA.equals(col)) {
+                cols[i] = MediaStore.MediaColumns.DATA;
+                values[i++] = file.getAbsolutePath();
+            }
+        }
+
+        cols = copyOf(cols, i);
+        values = copyOf(values, i);
+
+        final MatrixCursor cursor = new MatrixCursor(cols, 1);
+        cursor.addRow(values);
+        return cursor;
+    }
 
     @Override
     public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {

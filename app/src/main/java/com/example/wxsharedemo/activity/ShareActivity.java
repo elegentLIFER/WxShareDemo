@@ -1,6 +1,7 @@
 package com.example.wxsharedemo.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -32,7 +33,6 @@ public class ShareActivity extends AppCompatActivity {
 
     public static final int PERMISSION_REQ_ID = 0x11;
     private static final String[] REQUESTED_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE};
-    private static final String TAG = "ShareActivity";
     private boolean isData = true;
 
     @Override
@@ -76,7 +76,7 @@ public class ShareActivity extends AppCompatActivity {
     private Uri getUri() {
         String imagePath = (isData ? Constants.getDataPath(this) : Constants.getOutterPath()) + File.separator + "test.jpg";
         Uri uri = FileProvider.getUriForFile(this, ZmanFileProvider.AUTHORITY, new File(imagePath));
-        grantUriPermission("com.example.filereceiver", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);// once grant permission
+        grantUriPermission("com.example.filereceiver", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
         return uri;
     }
 
